@@ -47,3 +47,21 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy via Docker Compose') {
+            steps {
+                sh 'docker-compose down || true'
+                sh 'docker-compose up -d --build'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Deployment successful!'
+        }
+        failure {
+            echo '❌ Build failed.'
+        }
+    }
+}
