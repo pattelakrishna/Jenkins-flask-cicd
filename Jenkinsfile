@@ -17,7 +17,10 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install --user -r flask-app/requirements.txt'
+                sh '''
+                    pip install --upgrade pip
+                    pip install --user -r flask-app/requirements.txt
+                '''
             }
         }
 
