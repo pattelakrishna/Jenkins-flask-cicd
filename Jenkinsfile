@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'python:3.9' }
+    }
 
     environment {
         IMAGE_NAME = "jenkins-flask-demo"
@@ -15,7 +17,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip3 install -r flask-app/requirements.txt'
+                sh 'pip install -r flask-app/requirements.txt'
             }
         }
 
