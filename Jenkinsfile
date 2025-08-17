@@ -18,8 +18,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                    pip install --upgrade pip --quite
-                    pip install -r flask-app/requirements.txt --quite
+                    pip install --upgrade pip --quiet
+                    pip install -r flask-app/requirements.txt --quiet
                 '''
             }
         }
@@ -32,7 +32,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME ./flask-app'
+                sh "docker build -t $IMAGE_NAME ./flask-app"
             }
         }
 
@@ -47,21 +47,3 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy via Docker Compose') {
-            steps {
-                sh 'docker-compose down || true'
-                sh 'docker-compose up -d --build'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo '✅ Deployment successful!'
-        }
-        failure {
-            echo '❌ Build failed.'
-        }
-    }
-}
